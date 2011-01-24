@@ -2,15 +2,23 @@ set nocompatible
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
+
+filetype off
 filetype plugin indent on
+
 syntax on
+if !exists("autocommands_loaded")
+  let autocommands_loaded = 1
+  au filetypedetect BufRead,BufNewFile *.html.erb ru syntax/html/html5.vim
+endif
 
 "use CUA keystrokes for clipboard: CTRL-X, CTRL-C, CTRL-V and CTRL-z
 source $VIMRUNTIME/mswin.vim
 
+
 "indent settings
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set autoindent
 

@@ -10,3 +10,9 @@
 [submodule "bundle/vibrantink"]
 	path = bundle/vibrantink
 	url = https://github.com/vim-scripts/vibrantink.git
+[submodule "bundle/html5"]
+	path = bundle/html5
+	url = https://github.com/othree/html5.vim.git
+[submodule "bundle/vim-rails"]
+	path = bundle/vim-rails
+	url = https://github.com/tpope/vim-rails.git
