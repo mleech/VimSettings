@@ -34,7 +34,7 @@ set incsearch           " Incremental search
 set hlsearch            " hilight searches by default
 set hidden              " Hide buffers when they are abandoned
 
-nnoremap <esc> :noh<return><esc>
+nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 vnoremap > >gv
 vnoremap < <gv  
 vnoremap <Tab> >gv
