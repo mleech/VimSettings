@@ -1,4 +1,3 @@
-colorscheme jellybeans
 set guioptions-=T
 set guioptions+=c
 if has("gui_gtk2")
