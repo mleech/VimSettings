@@ -1,61 +1,84 @@
 set nocompatible
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
+filetype on
 filetype off
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#runtime_append_all_bundles()
+
 filetype plugin indent on
 
-colorscheme jellybeans
+set t_Co=256
 set background=dark
+colorscheme jellybeans
 set number
 
-set mouse=a "enable terminal mouse support
-set selectmode="" "turn off select mode - selections enter visual mode
+set mouse=a         "enable terminal mouse support
+set selectmode=""   "turn off select mode - selections enter visual mode
 
 syntax on
-if !exists("autocommands_loaded")
-  let autocommands_loaded = 1
-  au filetypedetect BufRead,BufNewFile *.html.erb ru syntax/html/html5.vim
-endif
-
-"use CUA keystrokes for clipboard: CTRL-X, CTRL-C, CTRL-V and CTRL-z
-source $VIMRUNTIME/mswin.vim
 
 "indent settings
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 set autoindent
 
-" Setup word wrap
-set nowrap
-set linebreak
-
 set showcmd             " Show (partial) command in status line.
-set showmatch           " Show matching brackets.
 set ignorecase          " Do case insensitive matching
 set smartcase           " Do smart case matching
 set incsearch           " Incremental search
 set hlsearch            " hilight searches by default
 set hidden              " Hide buffers when they are abandoned
+set cursorline          " Highlight current line
 
-nnoremap <C-q> <C-v>
-nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
-vnoremap > >gv
+set switchbuf=useopen
+set laststatus=2
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+
+set backup
+set backupdir-=.
+set directory-=.
+set wildmode=longest,list
+set wildmenu
+let mapleader=","
+
+nnoremap <CR> :nohlsearch<CR>
+
+"keep visual selection when indenting
+vnoremap > >gv 
 vnoremap < <gv  
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
 
-let mapleader = ','
+"copy/paste from system clipboard
+map <leader>y "*y
+map <leader>p "*p
 
-set backupdir=/tmp//,$TEMP//
-set directory=/tmp//,$TEMP//
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
-"NERDTree Settings
-nmap <leader>n :NERDTreeToggle<CR>
-let NERDChristmasTree = 1
-let NERDTreeHighlightCursorline = 1
-let NERDTreeShowHidden = 1
-let NERDTreeMapActivateNode='<CR>'
-let NERDTreeIgnore=['\.git']
+"tab autocompletion
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+
+if has('gui_running')
+    set guioptions-=T
+    set guioptions+=c
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ Medium\ 15
+    elseif has("gui_win32")
+        set guifont=Consolas:h13:cANSI
+    elseif has("gui_macvim") 
+        set guifont=Inconsolata:h15
+    endif
+endif
