@@ -29,6 +29,8 @@ set hlsearch            " hilight searches by default
 set hidden              " Hide buffers when they are abandoned
 set cursorline          " Highlight current line
 
+set winwidth=79
+
 set switchbuf=useopen
 set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
@@ -38,6 +40,8 @@ set backupdir-=.
 set directory-=.
 set wildmode=longest,list
 set wildmenu
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
 let mapleader=","
 
 nnoremap <CR> :nohlsearch<CR>
